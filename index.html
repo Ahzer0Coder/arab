@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار التذوق الأدبي - Quiz Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">📚 التذوق الأدبي Quiz</h1>
+                <p class="subtitle">اختبر معلوماتك في التذوق الأدبي</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main id="main-content" class="main-content">
+            <!-- Home Screen -->
+            <div id="home-screen" class="screen active">
+                <div class="welcome-section">
+                    <h2>مرحباً بك في منصة الاختبار</h2>
+                    <p>اختر نوع الاختبار الذي تريد البدء به:</p>
+                    
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="startQuiz('all')">
+                            <span class="option-icon">📝</span>
+                            <span class="option-title">اختبار كامل</span>
+                            <span class="option-desc">جميع الأسئلة</span>
+                        </button>
+                        
+                        <button class="option-btn" onclick="startQuiz('mcq')">
+                            <span class="option-icon">✓</span>
+                            <span class="option-title">اختيار من متعدد</span>
+                            <span class="option-desc">MCQ فقط</span>
+                        </button>
+                        
+                        <button class="option-btn" onclick="startQuiz('truefalse')">
+                            <span class="option-icon">⚔️</span>
+                            <span class="option-title">صواب وخطأ</span>
+                            <span class="option-desc">True/False</span>
+                        </button>
+                        
+                        <button class="option-btn" onclick="showTopics()">
+                            <span class="option-icon">🎯</span>
+                            <span class="option-title">اختر موضوع</span>
+                            <span class="option-desc">حسب الفصل</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topics Screen -->
+            <div id="topics-screen" class="screen">
+                <div class="topics-section">
+                    <h2>اختر الموضوع</h2>
+                    <div id="topics-grid" class="topics-grid">
+                        <!-- يتم ملؤها ديناميكياً -->
+                    </div>
+                    <button class="btn-back" onclick="goHome()">← رجوع</button>
+                </div>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div id="quiz-screen" class="screen">
+                <div class="quiz-container">
+                    <!-- Progress Bar -->
+                    <div class="progress-section">
+                        <div class="progress-info">
+                            <span id="question-counter" class="counter">السؤال 1 من 10</span>
+                            <span id="score-display" class="score">النقاط: 0</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="progress-fill" class="progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question -->
+                    <div class="question-section">
+                        <div id="question-text" class="question-text">
+                            <!-- يتم ملؤها ديناميكياً -->
+                        </div>
+                        
+                        <div id="question-type-info" class="question-type">
+                            <!-- MCQ أو True/False -->
+                        </div>
+
+                        <!-- Explanation -->
+                        <div id="explanation-section" class="explanation-section" style="display:none;">
+                            <div class="explanation-header">
+                                <span class="explanation-title">💡 الشرح:</span>
+                                <button class="btn-close-explanation" onclick="closeExplanation()">✕</button>
+                            </div>
+                            <div id="explanation-text" class="explanation-text">
+                                <!-- يتم ملؤها ديناميكياً -->
+                            </div>
+                        </div>
+
+                        <!-- Options for MCQ -->
+                        <div id="mcq-options" class="options-container">
+                            <!-- يتم ملؤها ديناميكياً -->
+                        </div>
+
+                        <!-- True/False Buttons -->
+                        <div id="tf-options" class="true-false-container" style="display:none;">
+                            <button class="btn-option btn-true" onclick="answerTrueFalse(true)">✓ صحيح</button>
+                            <button class="btn-option btn-false" onclick="answerTrueFalse(false)">✗ خطأ</button>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="navigation">
+                        <button id="btn-prev" class="btn-nav" onclick="previousQuestion()">← السابق</button>
+                        <button id="btn-show-explanation" class="btn-nav btn-explanation" onclick="showExplanation()">💡 الشرح</button>
+                        <button id="btn-next" class="btn-nav" onclick="nextQuestion()">التالي →</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Screen -->
+            <div id="results-screen" class="screen">
+                <div class="results-container">
+                    <div class="results-header">
+                        <h2>انتهى الاختبار! 🎉</h2>
+                    </div>
+
+                    <div class="results-score">
+                        <div id="final-score" class="score-display">
+                            <!-- يتم ملؤها ديناميكياً -->
+                        </div>
+                        <div id="score-breakdown" class="score-breakdown">
+                            <!-- يتم ملؤها ديناميكياً -->
+                        </div>
+                    </div>
+
+                    <div class="results-details">
+                        <div id="answers-review" class="answers-review">
+                            <!-- يتم ملؤها ديناميكياً -->
+                        </div>
+                    </div>
+
+                    <div class="results-actions">
+                        <button class="btn-primary" onclick="goHome()">← العودة للرئيسية</button>
+                        <button class="btn-secondary" onclick="retakeQuiz()">إعادة الاختبار</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>منصة اختبار التذوق الأدبي © 2026</p>
+        </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
